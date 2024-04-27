@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container, Col, Row, Nav, Navbar, Button} from 'react-bootstrap'
 import './App.css';
-import {Routes, Route, useNavigate} from 'react-router-dom';
+import {Routes, Route, useNavigate, Outlet, Link} from 'react-router-dom';
 import DetailPage from './pages/Detail.js';
 // css를 제공해주는 사이트 : bootstrap
 // npm install react-bootstrap bootstrap
@@ -18,8 +18,8 @@ import { useState } from 'react';
 
 // 라우터는 창을 새로 불러오는게 아니라 재렌더링 방식을 사용
 function App() {
-  let [items, setItems] = useState(data);   // data는 변수니깐 state로
-  let [photo, setPhoto] = useState(['/monitor.png','/mouse.png','/keyboard.png']);   // useState import
+  let [items, setItems] = useState(data);   // data는 변수니깐 state로 (data => items)
+  let [photo, setPhoto] = useState(['/monitor.png','/mouse.png','/keyboard.png', '/logo192.png']);   // useState import
   let navigate = useNavigate()
 
   return (
@@ -54,11 +54,33 @@ function App() {
             </Container>
           </>
         }></Route>
-        <Route path='/detail' element={<DetailPage items={items}/>}></Route>
+        {/* 
+          :id   ==> URL파라미터(변수)를 통해서 상세아이템 변경
+        */}
+        <Route path='/detail/:id' element={<DetailPage items={items} img={photo}/>}></Route>
+        {/*
+         <Route path='/detail/1' element={<DetailPage items={items} id={1} img={photo}/>}></Route>
+        <Route path='/detail/2' element={<DetailPage items={items} id={2} img={photo}/>}></Route> 
+        */}
+        <Route path='/about' element={<AboutPage/>}>
+          <Route path='address' element={<div>주소</div>}></Route>
+          <Route path='location' element={<div>위치</div>}></Route>
+        </Route>
+
+        <Route path='*' element={<div>그 외의 페이지(404)</div>}></Route>
       </Routes>
+
+      {/* 
+        리액트는 하나의 html을 다시 그리는 방식이기 때문에
+        html을 이동하는 <a>태그 보다는 리액트 라우터의 <Link>를 사용
+      */}
+      <Link to="/about/address"><Button variant="warning">리액트 부트스트랩 버튼</Button></Link>
+      <a href="/about/location">a태그로 이동</a>
+
     </div>
   );
 }
+
 export default App;
 
 // 컴포넌트는 맨 앞글자는 대문자
@@ -74,6 +96,20 @@ function ItemCol(props)
         <h4>{props.data.title}</h4>
         <p>{props.data.price} 원</p>
       </Col>
+    </>
+  )
+}
+
+// 어바웃페이지의 컴포넌트
+function AboutPage()
+{
+  return(
+    <>
+      <div>
+        <h4>어바웃 페이지</h4>
+        {/* Outlet으로 중첩Route의 위치를 결정 */}
+        <Outlet/>
+      </div>
     </>
   )
 }

@@ -9,14 +9,20 @@ let data =
   {
     id:1,
     title:'마우스',
-    content:'',
+    content:'로지텍 마우스',
     price:2000
   },
   {
     id:2,
     title:'키보드',
-    content:'',
+    content:'레오폴드 키보드',
     price:3000
+  },
+  {
+    id:3,
+    title:'로고',
+    content:'로고',
+    price:1000
   }
 ]
 let num1 = 1;
