@@ -15,6 +15,7 @@ import {num1, num2, num3} from './data.js'
 // 이미지를 사용하려면 import
 import 작명 from './main.png';      // 이미지 import
 import { useState } from 'react';
+import Cart from './pages/Cart.js';
 
 // 라우터는 창을 새로 불러오는게 아니라 재렌더링 방식을 사용
 function App() {
@@ -29,8 +30,9 @@ function App() {
           <Navbar.Brand href="/"><img src={'/logo192.png'} width={'50px'} height={'50px'}/></Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={()=>{navigate('/')}}>홈</Nav.Link>
-            <Nav.Link onClick={()=>{navigate('/detail')}}>상세페이지</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/detail/0')}}>상세페이지</Nav.Link>
             <Nav.Link onClick={()=>{navigate('/about')}}>About</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/cart')}}>장바구니</Nav.Link>
             <Nav.Link onClick={()=>{navigate(-1)}}>뒤로가기</Nav.Link>
             <Nav.Link onClick={()=>{navigate(1)}}>앞으로가기</Nav.Link>
           </Nav>
@@ -66,16 +68,16 @@ function App() {
           <Route path='address' element={<div>주소</div>}></Route>
           <Route path='location' element={<div>위치</div>}></Route>
         </Route>
-
+        <Route path='/cart' element={<Cart/>}></Route>
         <Route path='*' element={<div>그 외의 페이지(404)</div>}></Route>
       </Routes>
 
       {/* 
         리액트는 하나의 html을 다시 그리는 방식이기 때문에
         html을 이동하는 <a>태그 보다는 리액트 라우터의 <Link>를 사용
+        <Link to="/about/address"><Button variant="warning">리액트 부트스트랩 버튼</Button></Link>
+        <a href="/about/location">a태그로 이동</a>
       */}
-      <Link to="/about/address"><Button variant="warning">리액트 부트스트랩 버튼</Button></Link>
-      <a href="/about/location">a태그로 이동</a>
 
     </div>
   );
